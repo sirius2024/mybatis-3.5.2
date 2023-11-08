@@ -8,7 +8,9 @@
     &lt;!&ndash;cacheEnabled值默认就为true&ndash;&gt;
     <setting name="cacheEnabled" value="true"/>
   </settings>-->
-
+  <typeAliases>
+    <package name="com.sirius.mybatis.entity"/>
+  </typeAliases>
   <!--  <plugins>
     <plugin interceptor="com.itheima.interceptor.MyPlugin">
       <property name="someProperty" value="100"/>
@@ -33,6 +35,7 @@
 
   <mappers>
     <mapper resource="mapper/UserMapper.xml"/>
+   <!-- <mapper resource="mapper/StudentMapper.xml"/>-->
     <!--<mapper class="com.itheima.mapper.UserMapper"></mapper>-->
    <!-- <package name="com.itheima.mapper"/>-->
   </mappers>

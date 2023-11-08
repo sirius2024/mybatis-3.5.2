@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sirius.mybatis.mapper.MemberNS">
+
+  <resultMap id="MemberResultMap" type="Member">
+    <id property="mid" column="mid"/>
+    <result property="name" column="name"/>
+    <result property="age" column="age"/>
+    <result property="sex" column="sex"/>
+    <discriminator javaType="java.lang.String" column="type">
+      <case value="stu" resultType="Student">
+        <result property="score" column="score"/>
+        <result property="major" column="major"/>
+      </case>
+      <case value="emp" resultType="Employee">
+        <result property="salary" column="salary"/>
+        <result property="dept" column="dept"/>
+      </case>
+    </discriminator>
+  </resultMap>
+
+  <select id="findAllStudent" resultMap="MemberResultMap">
+    select mid, name, age,score,major,type from member where type = 'stu'
+  </select>
+</mapper>

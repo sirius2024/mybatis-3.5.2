@@ -1,7 +1,9 @@
 package com.sirius.mybatis.test;
 
+import com.sirius.mybatis.entity.Member;
 import com.sirius.mybatis.entity.User;
 import com.sirius.mybatis.mapper.UserMapper;
+import com.sirius.mybatis.utils.MybtaisSessionFactory;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -10,6 +12,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * https://github.com/mybatis
@@ -79,6 +82,35 @@ public class MybatisTest {
     System.out.println("MyBatis源码环境搭建成功....");
 
     sqlSession.close();
+  }
+
+
+  @Test
+  public void cache_one() throws IOException {
+
+
+  }
+
+  @Test
+  public void cache_two() throws IOException {
+
+
+  }
+
+  @Test
+  public void discriminator() throws IOException {
+    List<Member> list = MybtaisSessionFactory.getSession().selectList("com.sirius.mybatis.mapper.MemberNS.findAllStudent");
+  }
+
+  @Test
+  public void one_to_one() throws IOException {
+
+
+  }
+
+  @Test
+  public void one_to_more() throws IOException {
+
 
   }
 }
