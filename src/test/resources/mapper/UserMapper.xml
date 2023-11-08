@@ -10,6 +10,13 @@
     -->
   <!--<cache></cache>-->
 
+  <!--<insert id="doCreate" parameterType="User" keyProperty="id" keyColumn="id" useGeneratedKeys="true">-->
+<!--  <insert id="doCreate" parameterType="User">
+    insert into user(username) values (#{username});
+    <selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>-->
 
   <select id="findById" parameterType="int" resultType="com.sirius.mybatis.entity.User">
     SELECT id,username from user where id = #{id}
