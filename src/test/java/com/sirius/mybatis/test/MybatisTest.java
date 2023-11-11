@@ -15,7 +15,6 @@
  */
 package com.sirius.mybatis.test;
 
-import cn.hutool.db.sql.SqlBuilder;
 import com.sirius.mybatis.entity.User;
 import com.sirius.mybatis.mapper.UserMapper;
 import com.sirius.mybatis.utils.MybtaisSessionFactory;
@@ -41,7 +40,7 @@ public class MybatisTest {
   @Test
   public void test1() throws Exception{
     SqlSession sqlSession = MybtaisSessionFactory.getSqlSessionFactory().openSession();
-    User user = sqlSession.selectOne("com.sirius.mybatis.mapper.UserMapper.findById", 1);
+    User user = sqlSession.selectOne("com.sirius.mybatis.mapper.UserMapper.findById", 1000);
     System.out.println(user);
     MybtaisSessionFactory.close();
   }
@@ -53,7 +52,7 @@ public class MybatisTest {
     UserMapper mapperProxy = sqlSession.getMapper(UserMapper.class);
 
     // 5.代理对象调用方法
-    User user = mapperProxy.findById(1);
+    User user = mapperProxy.findById(1000);
     User user2 = mapperProxy.findById(1);
 
     System.out.println(user);
@@ -62,6 +61,21 @@ public class MybatisTest {
   }
 
   @Test
+  public void test4() throws IOException {
+    SqlSession sqlSession = MybtaisSessionFactory.getSqlSessionFactory().openSession();
+    // 4. JDK动态代理生成代理对象
+    UserMapper mapperProxy = sqlSession.getMapper(UserMapper.class);
+
+    // 5.代理对象调用方法
+    User user = new User();
+    user.setId(1000);
+    user.setUsername(String.valueOf(System.currentTimeMillis()));
+    mapperProxy.update(user);
+    sqlSession.commit();
+    MybtaisSessionFactory.close();
+  }
+
+/*  @Test
   public void test3() throws Exception{
     SqlSession sqlSession = MybtaisSessionFactory.getSqlSessionFactory().openSession();
     String sql = SqlBuilder.create().insertPreFragment("insert into user(id, username) values(1, 'admin')").build();
@@ -73,5 +87,5 @@ public class MybatisTest {
     Object user = sqlSession.selectOne("com.sirius.mybatis.mapper.CommonMapper.selectOne", sql2);
     System.out.println(user);
     MybtaisSessionFactory.close();
-  }
+  }*/
 }

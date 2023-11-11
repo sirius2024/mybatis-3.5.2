@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sirius.mybatis.mapper.UserMapper">
 
-  <select id="findById" parameterType="int" resultType="User">
+  <select id="findById" parameterType="int" resultType="com.sirius.mybatis.entity.User">
     SELECT id,username from user where id = #{id}
   </select>
 
-  <update id="update" parameterType="User" >
+  <update id="update" parameterType="com.sirius.mybatis.entity.User" >
     update user set username = #{username} where id = #{id}
   </update>
 </mapper>

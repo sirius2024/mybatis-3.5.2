@@ -11,7 +11,7 @@
   </properties>
 -->
 
-  <!--<settings>-->
+  <settings>
     <!-- 这个配置使全局的映射器启用或禁用 【缓存】 -->
    <!-- <setting name="cacheEnabled" value="true" />-->
 
@@ -59,13 +59,14 @@
 
     <!-- 指定 MyBatis 所用日志的具体实现，未指定时将自动查找。 -->
    <!-- <setting name="logImpl" value="LOG4J " />-->
+    <setting name="logImpl" value="STDOUT_LOGGING" />
 
     <!-- 指定 MyBatis 增加到日志名称的前缀。值可以是任意字符串 -->
   <!--  <setting name="logPrefix" value="LOG4J " />-->
 
     <!-- 指定当结果集中值为 null 的时候是否调用映射对象的 setter（map 对象时为 put）方法，这对于有 Map.keySet() 依赖或 null 值初始化的时候是有用的。注意基本类型（int、boolean等）是不能设置成 null 的。 默认false-->
  <!--   <setting name="callSettersOnNulls" value="false " />-->
- <!-- </settings>-->
+ </settings>
 
   <!--注意：别名【不区分大小写】。-->
   <typeAliases>
@@ -96,7 +97,7 @@
       <dataSource type="POOLED">
         <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
         <!--<property name="driver" value="com.mysql.jdbc.Driver"/>-->
-        <property name="url" value="jdbc:mysql://mysql.sirius.com:33306/mybatis"/>
+        <property name="url" value="jdbc:mysql://mysql.sirius.com:33306/test?characterEncoding=utf8"/>
         <property name="username" value="root"/>
         <property name="password" value="cpwl123456"/>
       </dataSource>
