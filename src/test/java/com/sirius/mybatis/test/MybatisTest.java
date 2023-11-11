@@ -15,18 +15,16 @@
  */
 package com.sirius.mybatis.test;
 
+import cn.hutool.db.meta.Table;
 import cn.hutool.db.sql.SqlBuilder;
 import com.sirius.mybatis.entity.User;
 import com.sirius.mybatis.mapper.UserMapper;
 import com.sirius.mybatis.utils.MybtaisSessionFactory;
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
+import javax.sql.DataSource;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 /**
