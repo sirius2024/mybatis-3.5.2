@@ -59,9 +59,9 @@ public class MybtaisSessionFactory {
   public static SqlSession getSession() {
     SqlSession session = SESSION_THREAD_LOCAL.get();
     if (session == null) {
-      session = sqlSessionFactory.openSession();
+       session = sqlSessionFactory.openSession();
+       SESSION_THREAD_LOCAL.set(session);
     }
-    SESSION_THREAD_LOCAL.set(session);
     return session;
   }
 

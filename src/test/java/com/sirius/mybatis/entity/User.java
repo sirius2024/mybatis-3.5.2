@@ -15,6 +15,10 @@
  */
 package com.sirius.mybatis.entity;
 
+
+import org.apache.ibatis.type.Alias;
+
+@Alias("User")
 public class User {
 
   private Integer id;

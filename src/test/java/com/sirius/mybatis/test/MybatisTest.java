@@ -15,7 +15,6 @@
  */
 package com.sirius.mybatis.test;
 
-import com.sirius.mybatis.entity.Member;
 import com.sirius.mybatis.entity.User;
 import com.sirius.mybatis.mapper.UserMapper;
 import com.sirius.mybatis.utils.MybtaisSessionFactory;
