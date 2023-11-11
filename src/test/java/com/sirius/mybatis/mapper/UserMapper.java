@@ -23,5 +23,12 @@ public interface UserMapper {
   /**
    * 根据条件（id）查询用户
    */
-  User findByCondition(int id);
+  User findById(int id);
+
+  /**
+   * 更新
+   * @param user
+   * @return
+   */
+  int update(User user);
 }
