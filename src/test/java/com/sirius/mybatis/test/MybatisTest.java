@@ -52,8 +52,8 @@ public class MybatisTest {
     UserMapper mapperProxy = sqlSession.getMapper(UserMapper.class);
 
     // 5.代理对象调用方法
-    User user = mapperProxy.findByCondition(1);
-    User user2 = mapperProxy.findByCondition(1);
+    User user = mapperProxy.findById(1);
+    User user2 = mapperProxy.findById(1);
 
     System.out.println(user);
     System.out.println("MyBatis源码环境搭建成功....");
