@@ -15,6 +15,7 @@
  */
 package com.sirius.mybatis.test;
 
+import cn.hutool.db.sql.SqlBuilder;
 import com.sirius.mybatis.entity.User;
 import com.sirius.mybatis.mapper.UserMapper;
 import com.sirius.mybatis.utils.MybtaisSessionFactory;
@@ -75,7 +76,7 @@ public class MybatisTest {
     MybtaisSessionFactory.close();
   }
 
-/*  @Test
+  @Test
   public void test3() throws Exception{
     SqlSession sqlSession = MybtaisSessionFactory.getSqlSessionFactory().openSession();
     String sql = SqlBuilder.create().insertPreFragment("insert into user(id, username) values(1, 'admin')").build();
@@ -87,5 +88,5 @@ public class MybatisTest {
     Object user = sqlSession.selectOne("com.sirius.mybatis.mapper.CommonMapper.selectOne", sql2);
     System.out.println(user);
     MybtaisSessionFactory.close();
-  }*/
+  }
 }
