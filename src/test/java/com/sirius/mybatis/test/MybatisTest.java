@@ -80,11 +80,10 @@ public class MybatisTest {
   public void test3() throws Exception{
     SqlSession sqlSession = MybtaisSessionFactory.getSqlSessionFactory().openSession();
     String sql = SqlBuilder.create().insertPreFragment("insert into user(id, username) values(1, 'admin')").build();
-    System.out.println(sql);
     sqlSession.selectOne("com.sirius.mybatis.mapper.CommonMapper.selectOne", sql);
+    sqlSession.commit();
 
-    String sql2 = SqlBuilder.create().select("username").from("user").where("id = 1").build();
-    System.out.println(sql2);
+    String sql2 = SqlBuilder.create().select("username").from("user").where("id = 1000").build();
     Object user = sqlSession.selectOne("com.sirius.mybatis.mapper.CommonMapper.selectOne", sql2);
     System.out.println(user);
     MybtaisSessionFactory.close();
