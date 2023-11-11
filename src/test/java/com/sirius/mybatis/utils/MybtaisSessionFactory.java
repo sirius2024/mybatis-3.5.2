@@ -45,7 +45,7 @@ public class MybtaisSessionFactory {
   public static SqlSessionFactory buildSqlSessionFactory() {
     try {
       // 1. 读取配置文件
-      InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+      InputStream inputStream = Resources.getResourceAsStream(CONFIG_FILE);
       // 2. 配置解析
       sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     } catch (Exception e) {
