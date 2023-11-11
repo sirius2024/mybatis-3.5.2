@@ -49,6 +49,7 @@ public class MybtaisSessionFactory {
       // 2. 配置解析
       sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
     } catch (Exception e) {
+      e.printStackTrace();
     }
     return sqlSessionFactory;
   }
