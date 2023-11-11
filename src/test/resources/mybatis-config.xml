@@ -4,10 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+<!--
   <properties>
     <property name="jdbc.username" value="test" />
     <property name="jdbc.password" value="test" />
   </properties>
+-->
 
   <!--<settings>-->
     <!-- 这个配置使全局的映射器启用或禁用 【缓存】 -->
