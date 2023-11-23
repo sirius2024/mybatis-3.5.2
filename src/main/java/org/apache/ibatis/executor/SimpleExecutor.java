@@ -33,6 +33,9 @@ import org.apache.ibatis.transaction.Transaction;
 
 /**
  * @author Clinton Begin
+ * 每次读或写操作都会创建一个新的预处理器（PrepareStatement）;
+ * 每次执行的的SQL都会进行一次预编译;
+ * 执行完成后，关闭该 Statement 对象。
  */
 public class SimpleExecutor extends BaseExecutor {
 
@@ -45,8 +48,11 @@ public class SimpleExecutor extends BaseExecutor {
     Statement stmt = null;
     try {
       Configuration configuration = ms.getConfiguration();
+      // 创建 StatementHandler 对象
       StatementHandler handler = configuration.newStatementHandler(this, ms, parameter, RowBounds.DEFAULT, null, null);
+      // 初始化 StatementHandler 对象
       stmt = prepareStatement(handler, ms.getStatementLog());
+      // <3> 执行 StatementHandler ，进行写操作
       return handler.update(stmt);
     } finally {
       closeStatement(stmt);
@@ -60,13 +66,17 @@ public class SimpleExecutor extends BaseExecutor {
       // 1. 获取配置实例
       Configuration configuration = ms.getConfiguration();
       // 2. new一个StatementHandler实例
+      // <1> 创建 StatementHandler 对象
       StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);
       // 3. 准备处理器，主要包括创建statement以及动态参数的设置
+      // <2> 初始化 StatementHandler 对象
       stmt = prepareStatement(handler, ms.getStatementLog());
       // 4. 执行真正的数据库操作调用
+      // <3> 执行 StatementHandler  ，进行读操作
       return handler.query(stmt, resultHandler);
     } finally {
       // 5. 关闭statement
+      // <4> 关闭 StatementHandler 对象
       closeStatement(stmt);
     }
   }
@@ -88,10 +98,13 @@ public class SimpleExecutor extends BaseExecutor {
   private Statement prepareStatement(StatementHandler handler, Log statementLog) throws SQLException {
     Statement stmt;
     // 1. 获取代理后（增加日志功能）的Connection对象
+    // <2.1> 获得 Connection 对象
     Connection connection = getConnection(statementLog);
     // 2. 创建Statement对象（可能是一个SimpleStatement，一个PreparedStatement或CallableStatement）
+    // <2.2> 创建 Statement 或 PrepareStatement 对象
     stmt = handler.prepare(connection, transaction.getTimeout());
     // 3. 参数化处理
+    // <2.3> 设置 SQL 上的参数，例如 PrepareStatement 对象上的占位符
     handler.parameterize(stmt);
     // 4. 返回执行前最后准备好的Statement对象
     return stmt;

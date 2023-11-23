@@ -655,9 +655,19 @@ public class Configuration {
     return newExecutor(transaction, defaultExecutorType);
   }
 
+  /**
+   * 创建 Executor 对象  -----------------在创建SqlSession执行
+   *
+   * @param transaction 事务对象
+   * @param executorType 执行器类型
+   * @return Executor 对象
+   */
   public Executor newExecutor(Transaction transaction, ExecutorType executorType) {
-    executorType = executorType == null ? defaultExecutorType : executorType;
-    executorType = executorType == null ? ExecutorType.SIMPLE : executorType;
+    // <1> 获得执行器类型
+    //可以通过在 mybatis-config.xml 配置 <setting name="defaultExecutorType" value="" />
+    executorType = executorType == null ? defaultExecutorType : executorType;// 使用默认
+    executorType = executorType == null ? ExecutorType.SIMPLE : executorType;// 判断默认
+    // <2> 3个分支3种执行器BatchExecutor/ReuseExecutor/SimpleExecutor：  默认为 SimpleExecutor 对象
     Executor executor;
     if (ExecutorType.BATCH == executorType) {
       executor = new BatchExecutor(this, transaction);
@@ -668,10 +678,12 @@ public class Configuration {
     }
 
     // 如果允许缓存，会通过CachingExecutor 去代理一层
+    // <3> 如果开启缓存，创建 CachingExecutor 对象，装饰者模式进行包装
     if (cacheEnabled) {
       executor = new CachingExecutor(executor);
     }
 
+    // <4> 应用插件
     // 拦截器插件
     executor = (Executor) interceptorChain.pluginAll(executor);
     return executor;
