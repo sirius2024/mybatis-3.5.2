@@ -294,7 +294,9 @@ public final class MappedStatement {
   }
 
   public BoundSql getBoundSql(Object parameterObject) {
+    // 获取BoundSql对象，BoundSql对象是对动态sql的解析  SqlSource作为一个接口，它只有一个作用就是获取BoundSql对象。
     BoundSql boundSql = sqlSource.getBoundSql(parameterObject);
+    // 获取参数映射
     List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
     if (parameterMappings == null || parameterMappings.isEmpty()) {
       boundSql = new BoundSql(configuration, boundSql.getSql(), parameterMap.getParameterMappings(), parameterObject);
@@ -310,7 +312,6 @@ public final class MappedStatement {
         }
       }
     }
-
     return boundSql;
   }
 

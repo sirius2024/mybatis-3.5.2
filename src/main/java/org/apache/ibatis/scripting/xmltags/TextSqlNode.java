@@ -24,6 +24,7 @@ import org.apache.ibatis.type.SimpleTypeRegistry;
 
 /**
  * @author Clinton Begin
+ * TextSqlNode中对${}标签进行了解析，没有加上双引号。
  */
 public class TextSqlNode implements SqlNode {
   private final String text;
@@ -40,7 +41,9 @@ public class TextSqlNode implements SqlNode {
 
   public boolean isDynamic() {
     DynamicCheckerTokenParser checker = new DynamicCheckerTokenParser();
+    //TextSqlNode中对${}标签进行了解析，没有加上双引号。
     GenericTokenParser parser = createParser(checker);
+    //然后 sqlSourceParser.parse 解析的是#{}标签，实现如下会将#{}解析为？
     parser.parse(text);
     return checker.isDynamic();
   }
@@ -53,6 +56,7 @@ public class TextSqlNode implements SqlNode {
   }
 
   private GenericTokenParser createParser(TokenHandler handler) {
+    //TextSqlNode中对${}标签进行了解析，没有加上双引号。
     return new GenericTokenParser("${", "}", handler);
   }
 

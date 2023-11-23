@@ -35,10 +35,15 @@ import org.apache.ibatis.session.Configuration;
  */
 public class BoundSql {
 
+  // 最终解析的sql，Mybatis将#{}和${}解析后的sql，其中#{}会被解析为?
   private final String sql;
+  // 参数映射
   private final List<ParameterMapping> parameterMappings;
+  // 参数对象
   private final Object parameterObject;
+  // 额外的参数
   private final Map<String, Object> additionalParameters;
+  // 元数据参数
   private final MetaObject metaParameters;
 
   public BoundSql(Configuration configuration, String sql, List<ParameterMapping> parameterMappings, Object parameterObject) {

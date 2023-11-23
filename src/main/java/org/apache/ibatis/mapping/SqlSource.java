@@ -23,6 +23,15 @@ package org.apache.ibatis.mapping;
  */
 public interface SqlSource {
 
+  /**
+   * SqlSource 接口只有一个方法，就是获取BoundSql对象，SqlSource接口的设计满足单一职责原则。
+   * SqlSource有五个实现类：ProviderSqlSource，DynamicSqlSource，RawSqlSource，StaticSqlSource，StaticSqlSource
+   * 其中比较常用的就是DynamicSqlSource，RawSqlSource和StaticSqlSource。如果sql中只包含#{}参数，不包含${}或者其它动态标签，
+   * 那么创建SqlSource对象时则会创建RawSqlSource，否则创建DynamicSqlSource对象。
+   *
+   * @param parameterObject
+   * @return
+   */
   BoundSql getBoundSql(Object parameterObject);
 
 }
