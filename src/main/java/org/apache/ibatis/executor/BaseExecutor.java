@@ -172,6 +172,7 @@ public abstract class BaseExecutor implements Executor {
     // 1. 如果配置了flushCacheRequired为true，则会在执行器执行之前就清空本地一级缓存
     if (queryStack == 0 && ms.isFlushCacheRequired()) {
       // 1.1. 清空缓存
+      clearLocalCache();
     }
     List<E> list;
     try {

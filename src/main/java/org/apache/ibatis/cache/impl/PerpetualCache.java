@@ -23,6 +23,11 @@ import org.apache.ibatis.cache.CacheException;
 
 /**
  * @author Clinton Begin
+ * 一级缓存
+ * 一级缓存，默认存在，无法关闭
+ * 缓存的数据存储在SQLSession对象中（类似Map集合，键对应的sql语句，值就是语句对应的结果）
+ * 当执行查询语句时，自动走缓存，缓存中如果有数据就返回，缓存没有就查询数据库，更新缓存
+ * 当执行非查询语句时(新增、修改、删除)，就会自动删除缓存
  */
 public class PerpetualCache implements Cache {
 
