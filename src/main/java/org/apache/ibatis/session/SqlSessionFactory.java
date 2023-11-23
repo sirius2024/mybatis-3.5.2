@@ -36,10 +36,9 @@ public interface SqlSessionFactory {
 
   SqlSession openSession(ExecutorType execType, boolean autoCommit);
 
-  SqlSession openSession(ExecutorType execType, TransactionIsolationLevel level);
-
   SqlSession openSession(ExecutorType execType, Connection connection);
 
-  Configuration getConfiguration();
+  SqlSession openSession(ExecutorType execType, TransactionIsolationLevel level);
 
+  Configuration getConfiguration();
 }
