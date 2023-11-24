@@ -36,16 +36,23 @@ public class RoutingStatementHandler implements StatementHandler {
 
   private final StatementHandler delegate;
 
-  public RoutingStatementHandler(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
 
+  public RoutingStatementHandler(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
+    /**
+     * RoutingStatementHandler使用策略模式，根据MappedStatement中指定的statementType字段，创建对应的StatementHandler接口实现
+     *  // RoutingStatementHandler的主要功能是根据MappedStatement的配置，生成对应的StatementHandler对象
+     */
     switch (ms.getStatementType()) {
       case STATEMENT:
+        //管理 Statement 对象并向数据库中推送不需要预编译的SQL语句
         delegate = new SimpleStatementHandler(executor, ms, parameter, rowBounds, resultHandler, boundSql);
         break;
       case PREPARED:
+        //管理 Statement 对象并向数据中推送需要预编译的SQL语句，
         delegate = new PreparedStatementHandler(executor, ms, parameter, rowBounds, resultHandler, boundSql);
         break;
       case CALLABLE:
+        //管理 Statement 对象并调用数据库中的存储过程
         delegate = new CallableStatementHandler(executor, ms, parameter, rowBounds, resultHandler, boundSql);
         break;
       default:

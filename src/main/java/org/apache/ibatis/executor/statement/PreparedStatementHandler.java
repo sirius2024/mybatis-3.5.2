@@ -33,7 +33,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
 /**
- * @author Clinton Begin
+ * @author Clinton Begin 该类底层依赖于PrepareStatement对象完成数据库的操作
  */
 public class PreparedStatementHandler extends BaseStatementHandler {
 
@@ -72,19 +72,31 @@ public class PreparedStatementHandler extends BaseStatementHandler {
     return resultSetHandler.handleCursorResultSets(ps);
   }
 
+  /**
+   * 直接调用Connection的prepareStatement方法创建PrepareStatement对象
+   * @param connection
+   * @return
+   * @throws SQLException
+   */
   @Override
   protected Statement instantiateStatement(Connection connection) throws SQLException {
+    // 获取待执行的sql
     String sql = boundSql.getSql();
+    // 根据keyGenerator的值创建PrepareStatement对象
     if (mappedStatement.getKeyGenerator() instanceof Jdbc3KeyGenerator) {
       String[] keyColumnNames = mappedStatement.getKeyColumns();
       if (keyColumnNames == null) {
+        // 返回数据库生成的主键
         return connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
       } else {
+        // 在insert语句执行完成之后，将keyColumnNames指定的列返回
         return connection.prepareStatement(sql, keyColumnNames);
       }
     } else if (mappedStatement.getResultSetType() == ResultSetType.DEFAULT) {
+      // 设置结果集是否可以滚动以及游标是否可以上下移动，设置结果集是否可更新
       return connection.prepareStatement(sql);
     } else {
+      // 创建普通的PrepareStatement对象
       return connection.prepareStatement(sql, mappedStatement.getResultSetType().getValue(), ResultSet.CONCUR_READ_ONLY);
     }
   }

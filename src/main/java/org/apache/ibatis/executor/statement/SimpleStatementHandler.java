@@ -33,7 +33,7 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 
 /**
- * @author Clinton Begin
+ * @author Clinton Begin SimpleStatementHandler是BaseStatementHandler的子类，底层使用了Statement对象完成数据库的相关操作，所以SQL语句中不能存在占位符，因此parameterize方法是空实现。
  */
 public class SimpleStatementHandler extends BaseStatementHandler {
 
@@ -41,6 +41,12 @@ public class SimpleStatementHandler extends BaseStatementHandler {
     super(executor, mappedStatement, parameter, rowBounds, resultHandler, boundSql);
   }
 
+  /**
+   * 负责执行insert、update、delete语句
+   * @param statement
+   * @return
+   * @throws SQLException
+   */
   @Override
   public int update(Statement statement) throws SQLException {
     String sql = boundSql.getSql();
@@ -82,6 +88,12 @@ public class SimpleStatementHandler extends BaseStatementHandler {
     return resultSetHandler.handleCursorResultSets(statement);
   }
 
+  /**
+   * 创建statement对象
+   * @param connection
+   * @return
+   * @throws SQLException
+   */
   @Override
   protected Statement instantiateStatement(Connection connection) throws SQLException {
     if (mappedStatement.getResultSetType() == ResultSetType.DEFAULT) {

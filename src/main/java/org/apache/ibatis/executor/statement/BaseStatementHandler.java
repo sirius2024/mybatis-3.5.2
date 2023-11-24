@@ -34,18 +34,31 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.type.TypeHandlerRegistry;
 
 /**
- * @author Clinton Begin
+ * @author Clinton Begin它只提供了一些参数绑定相关的方法，对数据库不进行任何操作
  */
 public abstract class BaseStatementHandler implements StatementHandler {
 
   protected final Configuration configuration;
   protected final ObjectFactory objectFactory;
   protected final TypeHandlerRegistry typeHandlerRegistry;
+  /**
+   * 记录结果集映射对象
+   */
   protected final ResultSetHandler resultSetHandler;
+  /**
+   * 记录使用的参数处理器对象。ParameterHandler的主要功能是为SQL绑定实参
+   * 也就是使用传入的实参替换SQL语句中的 ? 占位符
+   */
   protected final ParameterHandler parameterHandler;
 
   protected final Executor executor;
+  /**
+   * 记录SQL语句对应的MappedStatement
+   */
   protected final MappedStatement mappedStatement;
+  /**
+   * 记录用户设置的offset和limit，用于在结果集中定位映射的起始位置和结束位置
+   */
   protected final RowBounds rowBounds;
 
   protected BoundSql boundSql;
@@ -60,6 +73,7 @@ public abstract class BaseStatementHandler implements StatementHandler {
     this.objectFactory = configuration.getObjectFactory();
 
     if (boundSql == null) { // issue #435, get the key before calculating the statement
+      // 调用KeyGenerator.processBefore 方法获取主键
       generateKeys(parameterObject);
       boundSql = mappedStatement.getBoundSql(parameterObject);
     }
@@ -85,7 +99,9 @@ public abstract class BaseStatementHandler implements StatementHandler {
     ErrorContext.instance().sql(boundSql.getSql());
     Statement statement = null;
     try {
+      // 初始化statement对象，交给子类去实现
       statement = instantiateStatement(connection);
+      // 设置超时时间
       setStatementTimeout(statement, transactionTimeout);
       setFetchSize(statement);
       return statement;
