@@ -16,6 +16,7 @@
 package com.sirius.mybatis.utils;
 
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -54,6 +55,10 @@ public class MybtaisSessionFactory {
     return sqlSessionFactory;
   }
 
+  public static SqlSessionFactory getSqlSessionFactory() {
+    return sqlSessionFactory;
+  }
+
   /**
    * 获取SqlSession接口对象实例
    */
@@ -66,9 +71,16 @@ public class MybtaisSessionFactory {
     return session;
   }
 
-
-  public static SqlSessionFactory getSqlSessionFactory() {
-    return sqlSessionFactory;
+  /**
+   * 获取SqlSession接口对象实例
+   */
+  public static SqlSession getSession(ExecutorType executorType) {
+    SqlSession session = SESSION_THREAD_LOCAL.get();
+    if (session == null) {
+      session = sqlSessionFactory.openSession();
+      SESSION_THREAD_LOCAL.set(session);
+    }
+    return session;
   }
 
   /**

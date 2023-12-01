@@ -5,4 +5,12 @@
   <select id="selectOne" parameterType="string" resultType="object">
     ${sql}
   </select>
+
+  <insert id="saveUsers" parameterType="java.util.List">
+    insert into user(id,username)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id},#{item.username})
+    </foreach>
+  </insert>
 </mapper>

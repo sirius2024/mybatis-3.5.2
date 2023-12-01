@@ -86,4 +86,10 @@ public class MybatisTest {
     System.out.println(user);
     MybtaisSessionFactory.close();
   }
+
+
+  @Test
+  public void update(){
+    SqlSession sqlSession = MybtaisSessionFactory.getSqlSessionFactory().openSession();
+  }
 }
